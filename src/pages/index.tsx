@@ -49,7 +49,15 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
-  const [selectedDateTime, setSelectedDateTime] = useState(formatDateForInput(new Date(Date.now() - 60 * 60 * 1000)));
+ // const [selectedDateTime, setSelectedDateTime] = useState(formatDateForInput(new Date(Date.now() - 60 * 60 * 1000)));
+  const [selectedDateTime, setSelectedDateTime] = useState(() => {
+    const oneHourAgo = new Date();
+    oneHourAgo.setHours(oneHourAgo.getHours() - 1); // 1시간 전으로 설정
+    oneHourAgo.setMinutes(0); // 분을 00으로 설정
+    oneHourAgo.setSeconds(0); // 초도 0으로 설정 (선택사항이지만 깔끔함)
+    return formatDateForInput(oneHourAgo);
+  });
+  
   const [stationId, setStationId] = useState('108'); // 기본값을 '서울(108)'로 유지
   
   const [lastRequestParams, setLastRequestParams] = useState<LastRequestParams | null>(null);
